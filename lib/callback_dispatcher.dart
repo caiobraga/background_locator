@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'keys.dart';
 import 'location_dto.dart';
 
+import 'package:snapdriver/location_dto_.dart';
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   const MethodChannel _backgroundChannel =
@@ -13,6 +14,9 @@ void callbackDispatcher() {
   WidgetsFlutterBinding.ensureInitialized();
 
   _backgroundChannel.setMethodCallHandler((MethodCall call) async {
+    if (Keys.BCM_SEND_LOCATION == call.method) {
+      callBack_();
+    }
     if (Keys.BCM_SEND_LOCATION == call.method) {
       final Map<dynamic, dynamic> args = call.arguments;
       final Function callback = PluginUtilities.getCallbackFromHandle(
